@@ -60,10 +60,10 @@ The forecasting model uses:
 # 📂 Project Structure
 
 Load Forecasting using LSTM
---
---
---
---
---
---
+--Requirements.txt
+--advanced_ekpc_load_forecasting_model.keras
+--app.py
+--ekpc_usage.csv
+--scaler.save
+--train.py
 
