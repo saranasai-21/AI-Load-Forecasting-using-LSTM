@@ -395,3 +395,10 @@ print(
     "\nSaved as: "
     "advanced_ekpc_load_forecasting_model.keras"
 )
+
+import joblib
+
+joblib.dump(
+    scaler,
+    "scaler.save"
+)
