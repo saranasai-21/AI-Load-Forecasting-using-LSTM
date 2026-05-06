@@ -4,7 +4,7 @@ An advanced deep learning-based electricity load forecasting system developed us
 
 This project predicts next-hour electricity demand using historical load patterns and time-series forecasting techniques.
 
-# 📌 Project Overview
+# Project Overview
 
 Electricity demand forecasting is critical for:
 
@@ -18,7 +18,7 @@ This project uses a **Bidirectional Long Short-Term Memory (BiLSTM)** neural net
 
 The system also includes a professional **Streamlit dashboard** for real-time forecasting and visualization.
 
-# 🧠 Deep Learning Architecture
+# Deep Learning Architecture
 
 The forecasting model uses:
 
@@ -29,7 +29,7 @@ The forecasting model uses:
 - EarlyStopping
 - ReduceLROnPlateau
 
-# 📊 Model Performance
+# Model Performance
 
 | Metric & Value |
 | MAE - 29.31 |
@@ -46,7 +46,7 @@ The forecasting model uses:
 
 ---
 
-# 🛠 Technologies Used
+# Technologies Used
 
 - Python
 - TensorFlow / Keras
@@ -57,13 +57,13 @@ The forecasting model uses:
 - Streamlit
 - Joblib
 
-# 📂 Project Structure
+# Project Structure
 
 Load Forecasting using LSTM
---Requirements.txt
---advanced_ekpc_load_forecasting_model.keras
---app.py
---ekpc_usage.csv
---scaler.save
---train.py
+-- Requirements.txt
+-- advanced_ekpc_load_forecasting_model.keras
+-- app.py
+-- ekpc_usage.csv
+-- scaler.save
+-- train.py
 
