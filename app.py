@@ -55,7 +55,7 @@ st.write(
 # MODEL METRICS
 # =========================================================
 
-st.subheader("Model Performance")
+st.subheader("📊 Model Performance")
 col1, col2, col3 = st.columns(3)
 with col1:
     st.metric(
