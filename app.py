@@ -6,39 +6,59 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import joblib
+import tensorflow as tf
 
 from tensorflow.keras.models import load_model
+
+# =========================================================
+# PAGE CONFIG
+# =========================================================
+
+st.set_page_config(
+    page_title="Load Forecasting",
+    page_icon="⚡",
+    layout="wide"
+)
 
 # =========================================================
 # LOAD MODEL + SCALER + METRICS
 # =========================================================
 
-model = load_model(
-    "load_forecasting_model.keras"
-)
+@st.cache_resource
+def load_artifacts():
 
-scaler = joblib.load(
-    "scaler.save"
-)
+    model = load_model(
+        "load_forecasting_model.keras",
+        compile=False
+    )
 
-metrics = joblib.load(
-    "metrics.save"
-)
+    scaler = joblib.load(
+        "scaler.save"
+    )
+
+    metrics = joblib.load(
+        "metrics.save"
+    )
+
+    return model, scaler, metrics
+
+model, scaler, metrics = load_artifacts()
 
 # =========================================================
-# PAGE TITLE
+# TITLE
 # =========================================================
 
 st.title(
-    "⚡ Next Hour Load Forecasting"
+    "⚡ AI Load Forecasting Using BiLSTM"
 )
 
 st.write(
-    "Enter the last 24 hour load values."
+    "Enter the last 24 hour electricity load values "
+    "to predict the next hour load."
 )
 
 # =========================================================
-# SHOW IMPORTANT METRICS
+# MODEL METRICS
 # =========================================================
 
 st.subheader("📊 Model Performance")
@@ -70,26 +90,40 @@ with col3:
 # USER INPUTS
 # =========================================================
 
+st.subheader("📝 Enter Last 24 Hour Loads")
+
 runtime_loads = []
+
+cols = st.columns(4)
 
 for i in range(24):
 
-    value = st.number_input(
-        f"Hour {i+1} Load (MW)",
-        min_value=0.0,
-        value=100.0,
-        step=1.0
-    )
+    with cols[i % 4]:
 
-    runtime_loads.append(value)
+        value = st.number_input(
+
+            f"Hour {i+1}",
+
+            min_value=0.0,
+
+            value=100.0,
+
+            step=1.0,
+
+            key=i
+        )
+
+        runtime_loads.append(value)
 
 # =========================================================
 # PREDICT BUTTON
 # =========================================================
 
-if st.button("Predict Next Hour Load"):
+if st.button("🚀 Predict Next Hour Load"):
 
-    runtime_loads = np.array(runtime_loads)
+    runtime_loads = np.array(
+        runtime_loads
+    )
 
     # =====================================================
     # CREATE FEATURES
@@ -149,12 +183,17 @@ if st.button("Predict Next Hour Load"):
     )
 
     # =====================================================
-    # PREDICTION
+    # PREDICT
     # =====================================================
 
     pred_scaled = model.predict(
-        runtime_scaled
+        runtime_scaled,
+        verbose=0
     )
+
+    # =====================================================
+    # INVERSE TRANSFORM
+    # =====================================================
 
     dummy = np.zeros((1, 4))
 
@@ -169,6 +208,27 @@ if st.button("Predict Next Hour Load"):
     # =====================================================
 
     st.success(
-        f"Predicted Next Hour Load: "
+        f"⚡ Predicted Next Hour Load: "
         f"{prediction:.2f} MW"
+    )
+
+    # =====================================================
+    # SHOW INPUT SUMMARY
+    # =====================================================
+
+    st.subheader("📈 Input Load Summary")
+
+    st.write(
+        f"Average Load: "
+        f"{runtime_loads.mean():.2f} MW"
+    )
+
+    st.write(
+        f"Maximum Load: "
+        f"{runtime_loads.max():.2f} MW"
+    )
+
+    st.write(
+        f"Minimum Load: "
+        f"{runtime_loads.min():.2f} MW"
     )
