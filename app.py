@@ -1,5 +1,6 @@
 # =========================================================
 # STREAMLIT LOAD FORECASTING APP
+# LAST 4 HOURS INPUT
 # =========================================================
 
 import streamlit as st
@@ -17,7 +18,7 @@ from tensorflow.keras.models import load_model
 st.set_page_config(
     page_title="Load Forecasting",
     page_icon="⚡",
-    layout="wide"
+    layout="centered"
 )
 
 # =========================================================
@@ -49,11 +50,11 @@ model, scaler, metrics = load_artifacts()
 # =========================================================
 
 st.title(
-    "⚡ AI Load Forecasting Using BiLSTM"
+    "⚡ AI Load Forecasting"
 )
 
 st.write(
-    "Enter the last 24 hour electricity load values "
+    "Enter the last 4 hour load values "
     "to predict the next hour load."
 )
 
@@ -66,21 +67,18 @@ st.subheader("📊 Model Performance")
 col1, col2, col3 = st.columns(3)
 
 with col1:
-
     st.metric(
         "Accuracy",
         f"{metrics['Accuracy10']:.2f}%"
     )
 
 with col2:
-
     st.metric(
         "MAE",
         f"{metrics['MAE']:.2f}"
     )
 
 with col3:
-
     st.metric(
         "R² Score",
         f"{metrics['R2']:.4f}"
@@ -90,30 +88,37 @@ with col3:
 # USER INPUTS
 # =========================================================
 
-st.subheader("📝 Enter Last 24 Hour Loads")
+st.subheader("📝 Enter Last 4 Hour Loads")
 
-runtime_loads = []
+col1, col2 = st.columns(2)
 
-cols = st.columns(4)
+with col1:
 
-for i in range(24):
+    load1 = st.number_input(
+        "Hour 1 Load",
+        min_value=0.0,
+        value=100.0
+    )
 
-    with cols[i % 4]:
+    load2 = st.number_input(
+        "Hour 2 Load",
+        min_value=0.0,
+        value=100.0
+    )
 
-        value = st.number_input(
+with col2:
 
-            f"Hour {i+1}",
+    load3 = st.number_input(
+        "Hour 3 Load",
+        min_value=0.0,
+        value=100.0
+    )
 
-            min_value=0.0,
-
-            value=100.0,
-
-            step=1.0,
-
-            key=i
-        )
-
-        runtime_loads.append(value)
+    load4 = st.number_input(
+        "Hour 4 Load",
+        min_value=0.0,
+        value=100.0
+    )
 
 # =========================================================
 # PREDICT BUTTON
@@ -121,8 +126,22 @@ for i in range(24):
 
 if st.button("🚀 Predict Next Hour Load"):
 
-    runtime_loads = np.array(
-        runtime_loads
+    # =====================================================
+    # CREATE 24-HOUR SEQUENCE
+    # =====================================================
+
+    runtime_loads = np.array([
+
+        load1,
+        load2,
+        load3,
+        load4
+    ])
+
+    # Repeat values to make 24 inputs
+    repeated_loads = np.tile(
+        runtime_loads,
+        6
     )
 
     # =====================================================
@@ -131,15 +150,12 @@ if st.button("🚀 Predict Next Hour Load"):
 
     current_hour = pd.Timestamp.now().hour
 
-    hours = []
+    hours = np.array([
 
-    for i in range(24):
+        (current_hour - 23 + i) % 24
 
-        hours.append(
-            (current_hour - 23 + i) % 24
-        )
-
-    hours = np.array(hours)
+        for i in range(24)
+    ])
 
     hour_sin = np.sin(
         2 * np.pi * hours / 24
@@ -150,11 +166,11 @@ if st.button("🚀 Predict Next Hour Load"):
     )
 
     rolling_mean = pd.Series(
-        runtime_loads
+        repeated_loads
     ).rolling(window=24).mean()
 
     rolling_mean = rolling_mean.fillna(
-        rolling_mean.mean()
+        repeated_loads.mean()
     )
 
     # =====================================================
@@ -163,7 +179,7 @@ if st.button("🚀 Predict Next Hour Load"):
 
     runtime_features = np.column_stack([
 
-        runtime_loads,
+        repeated_loads,
         rolling_mean,
         hour_sin,
         hour_cos
@@ -210,25 +226,4 @@ if st.button("🚀 Predict Next Hour Load"):
     st.success(
         f"⚡ Predicted Next Hour Load: "
         f"{prediction:.2f} MW"
-    )
-
-    # =====================================================
-    # SHOW INPUT SUMMARY
-    # =====================================================
-
-    st.subheader("📈 Input Load Summary")
-
-    st.write(
-        f"Average Load: "
-        f"{runtime_loads.mean():.2f} MW"
-    )
-
-    st.write(
-        f"Maximum Load: "
-        f"{runtime_loads.max():.2f} MW"
-    )
-
-    st.write(
-        f"Minimum Load: "
-        f"{runtime_loads.min():.2f} MW"
     )
