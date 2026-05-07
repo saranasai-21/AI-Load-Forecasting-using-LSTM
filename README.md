@@ -1,7 +1,6 @@
 # ⚡ EKPC Load Forecasting using Bidirectional LSTM
 
 An advanced deep learning-based electricity load forecasting system developed using **TensorFlow, Bidirectional LSTM, and Streamlit**.
-
 This project predicts next-hour electricity demand using historical load patterns and time-series forecasting techniques.
 
 # Project Overview
@@ -15,7 +14,6 @@ Electricity demand forecasting is critical for:
 - Smart energy management
 
 This project uses a **Bidirectional Long Short-Term Memory (BiLSTM)** neural network to accurately forecast electricity load based on historical consumption data.
-
 The system also includes a professional **Streamlit dashboard** for real-time forecasting and visualization.
 
 # Deep Learning Architecture
@@ -27,43 +25,61 @@ The forecasting model uses:
 - Dropout Regularization
 - Adam Optimizer
 - EarlyStopping
-- ReduceLROnPlateau
 
-# Model Performance
+📊 Feature Engineering
 
-| Metric & Value |
-| MAE - 29.31 |
-| MSE - 1505.41 |
-| RMSE - 38.80 |
-| R² Score - 0.9905 |
-| MAPE - 1.89% |
+The model was trained using:
 
-### Interpretation
+Historical Load Values (EKPC_MW)
+Rolling Mean (24 Hours)
+Cyclical Hour Encoding (Hour_sin, Hour_cos)
 
-- The model achieves extremely high forecasting accuracy.
-- R² score of 0.9905 indicates excellent trend learning.
-- MAPE below 2% demonstrates highly reliable predictions.
+📈 Model Performance
 
----
+Metric	Value
+MAE	29.31
+MSE	1505.41
+RMSE	38.80
+R² Score	0.9905
+Accuracy (Within 10%)	98%+
+
+# Interpretation
+
+The model achieves very high forecasting accuracy.
+R² Score of 0.9905 indicates excellent learning capability.
+Low MAE and RMSE values show minimal prediction error.
+Accuracy within 10% demonstrates reliable real-world forecasting performance.
 
 # Technologies Used
 
-- Python
-- TensorFlow / Keras
-- NumPy
-- Pandas
-- Scikit-learn
-- Matplotlib
-- Streamlit
-- Joblib
+Python
+TensorFlow / Keras
+NumPy
+Pandas
+Scikit-learn
+Streamlit
+Joblib
 
-# Project Structure
+# Streamlit Application
 
-Load Forecasting using LSTM
-- Requirements.txt
-- advanced_ekpc_load_forecasting_model.keras
-- app.py
-- ekpc_usage.csv
-- scaler.save
-- train.py
+The Streamlit dashboard allows users to:
+
+Enter recent electricity load values
+Predict the next-hour electricity demand
+View model performance metrics
+Perform real-time forecasting interactively
+
+📂 Project Structure
+EKPC Load Forecasting using BiLSTM
+│
+├── app.py
+├── train.py
+├── ekpc_usage.csv
+├── load_forecasting_model.keras
+├── scaler.save
+├── metrics.save
+├── requirements.txt
+└── README.md
+
+Developed as a deep learning and time-series forecasting project using BiLSTM architecture for electricity demand prediction.
 
