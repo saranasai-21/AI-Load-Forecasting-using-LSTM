@@ -71,15 +71,12 @@ The Streamlit dashboard allows users to:
 - Perform real-time forecasting interactively
 
 ## Run the Project
-
-## Install Requirements
-
-pip install -r requirements.txt
-
-## Run Streamlit App
-
-streamlit run app.py
-
+```text
+Install Requirements
+- pip install -r requirements.txt
+Run Streamlit App
+- streamlit run app.py
+```
 # 📂 Project Structure
 
 ```text
