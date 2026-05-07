@@ -30,46 +30,49 @@ The forecasting model uses:
 
 The model was trained using:
 
-Historical Load Values (EKPC_MW)
-Rolling Mean (24 Hours)
-Cyclical Hour Encoding (Hour_sin, Hour_cos)
+- Historical Load Values (EKPC_MW)
+- Rolling Mean (24 Hours)
+- Cyclical Hour Encoding (Hour_sin, Hour_cos)
 
-📈 Model Performance
+# 📈 Model Performance
 
-Metric	Value
-MAE	29.31
-MSE	1505.41
-RMSE	38.80
-R² Score	0.9905
-Accuracy (Within 10%)	98%+
+| Metric | Value |
+|---|---|
+| MAE | 29.31 |
+| MSE | 1505.41 |
+| RMSE | 38.80 |
+| R² Score | 0.9905 |
+| Accuracy (Within 10%) | 98%+ |
 
 # Interpretation
 
-The model achieves very high forecasting accuracy.
-R² Score of 0.9905 indicates excellent learning capability.
-Low MAE and RMSE values show minimal prediction error.
-Accuracy within 10% demonstrates reliable real-world forecasting performance.
+- The model achieves very high forecasting accuracy.
+- R² Score of 0.9905 indicates excellent learning capability.
+- Low MAE and RMSE values show minimal prediction error.
+- Accuracy within 10% demonstrates reliable real-world forecasting performance.
 
 # Technologies Used
 
-Python
-TensorFlow / Keras
-NumPy
-Pandas
-Scikit-learn
-Streamlit
-Joblib
+- Python
+- TensorFlow / Keras
+- NumPy
+- Pandas
+- Scikit-learn
+- Streamlit
+- Joblib
 
 # Streamlit Application
 
 The Streamlit dashboard allows users to:
 
-Enter recent electricity load values
-Predict the next-hour electricity demand
-View model performance metrics
-Perform real-time forecasting interactively
+- Enter recent electricity load values
+- Predict the next-hour electricity demand
+- View model performance metrics
+- Perform real-time forecasting interactively
 
 # 📂 Project Structure
+
+```text
 EKPC Load Forecasting using BiLSTM
 │
 ├── app.py
@@ -80,6 +83,7 @@ EKPC Load Forecasting using BiLSTM
 ├── metrics.save
 ├── requirements.txt
 └── README.md
+```
 
 Developed as a deep learning and time-series forecasting project using BiLSTM architecture for electricity demand prediction.
 
