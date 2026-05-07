@@ -3,7 +3,7 @@
 An advanced deep learning-based electricity load forecasting system developed using **TensorFlow, Bidirectional LSTM, and Streamlit**.
 This project predicts next-hour electricity demand using historical load patterns and time-series forecasting techniques.
 
-# Project Overview
+# 📌 Project Overview
 
 Electricity demand forecasting is critical for:
 
@@ -26,7 +26,7 @@ The forecasting model uses:
 - Adam Optimizer
 - EarlyStopping
 
-📊 Feature Engineering
+# 📊 Feature Engineering
 
 The model was trained using:
 
@@ -61,7 +61,7 @@ The model was trained using:
 - Streamlit
 - Joblib
 
-# Streamlit Application
+# 🚀 Streamlit Application
 
 The Streamlit dashboard allows users to:
 
@@ -69,6 +69,16 @@ The Streamlit dashboard allows users to:
 - Predict the next-hour electricity demand
 - View model performance metrics
 - Perform real-time forecasting interactively
+
+## Run the Project
+
+## Install Requirements
+
+pip install -r requirements.txt
+
+## Run Streamlit App
+
+streamlit run app.py
 
 # 📂 Project Structure
 
