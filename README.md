@@ -69,7 +69,7 @@ Predict the next-hour electricity demand
 View model performance metrics
 Perform real-time forecasting interactively
 
-📂 Project Structure
+# 📂 Project Structure
 EKPC Load Forecasting using BiLSTM
 │
 ├── app.py
@@ -83,3 +83,6 @@ EKPC Load Forecasting using BiLSTM
 
 Developed as a deep learning and time-series forecasting project using BiLSTM architecture for electricity demand prediction.
 
+# 🌐 Live Demo
+
+Streamlit App: https://ai-load-forecasting-using-lstm.streamlit.app
