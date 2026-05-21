@@ -97,3 +97,7 @@ Developed as a deep learning and time-series forecasting project using BiLSTM ar
 # 🌐 Live Demo
 
 Streamlit App: https://ai-load-forecasting-using-lstm.streamlit.app
+
+# Screenshot
+
+<img width="1374" height="830" alt="Screenshot 2026-05-22 023404" src="https://github.com/user-attachments/assets/8e22f1d0-1c98-455a-91fc-484d30d4706b" />
