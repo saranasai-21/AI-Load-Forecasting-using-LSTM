@@ -1,7 +1,4 @@
-# =========================================================
 # STREAMLIT LOAD FORECASTING APP
-# LAST 4 HOURS INPUT
-# =========================================================
 
 import streamlit as st
 import numpy as np
@@ -10,9 +7,7 @@ import joblib
 import tensorflow as tf
 from tensorflow.keras.models import load_model
 
-# =========================================================
 # PAGE CONFIG
-# =========================================================
 
 st.set_page_config(
     page_title="Load Forecasting",
@@ -20,9 +15,7 @@ st.set_page_config(
     layout="centered"
 )
 
-# =========================================================
 # LOAD MODEL + SCALER + METRICS
-# =========================================================
 
 @st.cache_resource
 def load_artifacts():
@@ -39,9 +32,7 @@ def load_artifacts():
     return model, scaler, metrics
 model, scaler, metrics = load_artifacts()
 
-# =========================================================
 # TITLE
-# =========================================================
 
 st.title(
     "⚡ AI Load Forecasting"
@@ -51,9 +42,7 @@ st.write(
     "to predict the next hour load."
 )
 
-# =========================================================
 # MODEL METRICS
-# =========================================================
 
 st.subheader("📊 Model Performance")
 col1, col2, col3 = st.columns(3)
@@ -73,9 +62,7 @@ with col3:
         f"{metrics['R2']:.4f}"
     )
 
-# =========================================================
-# USER INPUTS
-# =========================================================
+# USER LAST 4 HOUR INPUTS
 
 st.subheader("Enter Last 4 Hour Loads")
 col1, col2 = st.columns(2)
@@ -102,9 +89,7 @@ with col2:
         value=100.0
     )
 
-# =========================================================
 # PREDICT BUTTON
-# =========================================================
 
 if st.button("🚀 Predict Next Hour Load"):
     runtime_loads = np.array([
@@ -118,9 +103,7 @@ if st.button("🚀 Predict Next Hour Load"):
         6
     )
 
-    # =====================================================
     # CREATE FEATURES
-    # =====================================================
 
     current_hour = pd.Timestamp.now().hour
     hours = np.array([
@@ -140,20 +123,15 @@ if st.button("🚀 Predict Next Hour Load"):
         repeated_loads.mean()
     )
 
-    # =====================================================
     # BUILD INPUT FEATURES
-    # =====================================================
 
     runtime_features = np.column_stack([
         repeated_loads,
         rolling_mean,
         hour_sin,
         hour_cos
-    ])
-
-    # =====================================================
+   
     # SCALE INPUT
-    # =====================================================
 
     runtime_scaled = scaler.transform(
         runtime_features
@@ -167,9 +145,7 @@ if st.button("🚀 Predict Next Hour Load"):
         verbose=0
     )
 
-    # =====================================================
     # INVERSE TRANSFORM
-    # =====================================================
 
     dummy = np.zeros((1, 4))
     dummy[:, 0] = pred_scaled[0][0]
@@ -177,9 +153,7 @@ if st.button("🚀 Predict Next Hour Load"):
         dummy
     )[0, 0]
 
-    # =====================================================
     # OUTPUT
-    # =====================================================
 
     st.success(
         f"⚡ Predicted Next Hour Load: "
