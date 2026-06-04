@@ -76,7 +76,8 @@ if st.button("🚀 Predict Next Hour Load"):
         rolling_mean,
         hour_sin,
         hour_cos
-   
+    ])
+        
     # SCALE INPUT
 
     runtime_scaled = scaler.transform(runtime_features)
